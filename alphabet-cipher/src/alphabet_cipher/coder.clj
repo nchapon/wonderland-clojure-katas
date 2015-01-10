@@ -21,18 +21,15 @@
    alphabet
    (.indexOf (create-row row) col)))
 
-(defn expand-key
+(defn make-key
   "Expand key to the message length if necessary"
-  [key length]
-  (loop [expanded-key key]
-    (if (> (.length expanded-key) length)
-      (apply str (take length expanded-key))
-      (recur (str expanded-key key)))))
+  [keyword len]
+  (take len (apply concat (repeat keyword))))
 
 (defn cipher
   "Cipher"
   [f key message]
-  (loop [k (expand-key key (.length message))
+  (loop [k (make-key key (.length message))
         m message
         output []]
     (if (empty? m)

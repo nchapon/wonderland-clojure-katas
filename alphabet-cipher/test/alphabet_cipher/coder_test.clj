@@ -37,9 +37,9 @@
     (is (= \e
            (decoding \c \g)))))
 
-(deftest test-expand-key
+(deftest test-make-key
   (testing "key should be expanded if necessary")
   (is (= 7
-         (count (expand-key "keyverylong" 7))))
+         (count (make-key "keyverylong" 7))))
   (is (= 15
-         (count (expand-key "shortkey" 15)))))
+         (count (make-key "shortkey" 15)))))
