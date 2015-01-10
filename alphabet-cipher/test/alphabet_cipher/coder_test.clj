@@ -23,23 +23,23 @@
     (is (= \a
            (first (create-row \a))))))
 
-(deftest test-encode-char
+(deftest test-encoding-char
   (testing "Encode char"
     (is (= \e
-           (encode-char \s \m)))
+           (encoding \s \m)))
     (is (= \g
-           (encode-char \c \e)))))
+           (encoding \c \e)))))
 
-(deftest test-decode-char
+(deftest test-decoding-char
   (testing "Encode char"
     (is (= \m
-           (decode-char \s \e)))
+           (decoding \s \e)))
     (is (= \e
-           (decode-char \c \g)))))
+           (decoding \c \g)))))
 
 (deftest test-expand-key
   (testing "key should be expanded if necessary")
-  (is (= "keyverylong"
-         (expand-key "keyverylong" "message")))
-  (is (= "shortkeyshortkey"
-         (expand-key "shortkey" "messageverylong"))))
+  (is (= 7
+         (count (expand-key "keyverylong" 7))))
+  (is (= 15
+         (count (expand-key "shortkey" 15)))))

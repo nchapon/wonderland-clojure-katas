@@ -11,37 +11,36 @@
   [letter]
   (flatten (reverse (split-at (index-of-alphabet letter) alphabet))))
 
-(defn encode-char [row col]
+(defn encoding [row col]
   (nth
    (create-row row)
    (index-of-alphabet col)))
 
-(defn decode-char [row col]
+(defn decoding [row col]
   (nth
    alphabet
    (.indexOf (create-row row) col)))
 
 (defn expand-key
   "Expand key to the message length if necessary"
-  [key message]
+  [key length]
   (loop [expanded-key key]
-    (if (> (.length expanded-key) (.length message))
-      expanded-key
+    (if (> (.length expanded-key) length)
+      (apply str (take length expanded-key))
       (recur (str expanded-key key)))))
 
-
-(defn encode [key message]
-  (loop [k (expand-key key message)
+(defn cipher
+  "Cipher"
+  [f key message]
+  (loop [k (expand-key key (.length message))
         m message
-        encoded []]
+        output []]
     (if (empty? m)
-      (apply str encoded)
-      (recur (rest k) (rest m) (conj encoded (encode-char (first k) (first m)))))))
+      (apply str output)
+      (recur (rest k) (rest m) (conj output (f (first k) (first m)))))))
 
 (defn decode [key message]
-  (loop [k (expand-key key message)
-        m message
-        decoded []]
-    (if (empty? m)
-      (apply str decoded)
-      (recur (rest k) (rest m) (conj decoded (decode-char (first k) (first m)))))))
+  (cipher decoding key message))
+
+(defn encode [key message]
+  (cipher encoding key message))
