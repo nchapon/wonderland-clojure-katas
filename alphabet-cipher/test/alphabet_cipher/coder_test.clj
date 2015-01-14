@@ -31,7 +31,7 @@
            (encoding \c \e)))))
 
 (deftest test-decoding
-  (testing "Encode one"
+  (testing "Decode one"
     (is (= \m
            (decoding \s \e)))
     (is (= \e
