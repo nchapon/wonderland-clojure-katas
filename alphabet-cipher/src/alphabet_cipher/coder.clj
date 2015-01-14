@@ -11,12 +11,12 @@
   [letter]
   (flatten (reverse (split-at (index-of-alphabet letter) alphabet))))
 
-(defn encode-one [row col]
+(defn encoding [row col]
   (nth
    (create-row row)
    (index-of-alphabet col)))
 
-(defn decode-one [row col]
+(defn decoding [row col]
   (nth
    alphabet
    (.indexOf (create-row row) col)))
@@ -26,13 +26,12 @@
   [keyword len]
   (take len (apply concat (repeat keyword))))
 
-(defn cipher
-  "Cipher"
-  [f key message]
-  (apply str (map f (take (.length message) (cycle key)) message)))
+(defn coding
+  "coding"
+  [f]
+  (fn [key message]
+        (apply str (map f (take (.length message) (cycle key)) message))))
 
-(defn decode [key message]
-  (cipher decode-one key message))
+(def decode (coding decoding))
 
-(defn encode [key message]
-  (cipher encode-one key message))
+(def encode (coding encoding))

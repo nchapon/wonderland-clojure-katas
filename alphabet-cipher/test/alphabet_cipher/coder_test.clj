@@ -23,16 +23,16 @@
     (is (= \a
            (first (create-row \a))))))
 
-(deftest test-encode-one
+(deftest test-encoding
   (testing "Encode one"
     (is (= \e
-           (encode-one \s \m)))
+           (encoding \s \m)))
     (is (= \g
-           (encode-one \c \e)))))
+           (encoding \c \e)))))
 
-(deftest test-decode-one
+(deftest test-decoding
   (testing "Encode one"
     (is (= \m
-           (decode-one \s \e)))
+           (decoding \s \e)))
     (is (= \e
-           (decode-one \c \g)))))
+           (decoding \c \g)))))
