@@ -11,12 +11,12 @@
   [letter]
   (flatten (reverse (split-at (index-of-alphabet letter) alphabet))))
 
-(defn encoding [row col]
+(defn encode-one [row col]
   (nth
    (create-row row)
    (index-of-alphabet col)))
 
-(defn decoding [row col]
+(defn decode-one [row col]
   (nth
    alphabet
    (.indexOf (create-row row) col)))
@@ -29,15 +29,10 @@
 (defn cipher
   "Cipher"
   [f key message]
-  (loop [k (make-key key (.length message))
-        m message
-        output []]
-    (if (empty? m)
-      (apply str output)
-      (recur (rest k) (rest m) (conj output (f (first k) (first m)))))))
+  (apply str (map f (take (.length message) (cycle key)) message)))
 
 (defn decode [key message]
-  (cipher decoding key message))
+  (cipher decode-one key message))
 
 (defn encode [key message]
-  (cipher encoding key message))
+  (cipher encode-one key message))
